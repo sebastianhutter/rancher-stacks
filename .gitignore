@@ -4,3 +4,4 @@
 /tikautofw/env
 /letsencrypt/env
 /openvpn-server/env
+/gocd/env

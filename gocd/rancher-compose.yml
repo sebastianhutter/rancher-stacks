@@ -1,0 +1,27 @@
+version: '2'
+services:
+  loadbalancer:
+    scale: 1
+    start_on_create: true
+    lb_config:
+      certs: []
+      default_cert: letsencryptcert
+      port_rules:
+      - hostname: ci.hutter.cloud
+        path: ''
+        priority: 1
+        protocol: https
+        service: gocd-server
+        source_port: 8154
+        target_port: 8153
+    health_check:
+      healthy_threshold: 2
+      response_timeout: 2000
+      port: 42
+      unhealthy_threshold: 3
+      interval: 2000
+  gocd-server:
+    scale: 1
+    start_on_create: true
+  gocd-agent:
+    start_on_create: true
