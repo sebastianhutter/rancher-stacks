@@ -1,0 +1,39 @@
+version: '2'
+volumes:
+  vault-vault-server:
+    driver: nfs
+    driver_opts:
+      share: nas.barfoot.local:/volume1/docker/vault-vault-server
+  letsencrypt-certificates-vault:
+    driver: nfs
+    driver_opts:
+      share: nas.barfoot.local:/volume1/docker/letsencrypt-certificates-vault
+services:
+  vault-server:
+    cap_add:
+    - IPC_LOCK
+    image: vault
+    environment:
+      VAULT_LOCAL_CONFIG: '{ "backend": { "file": { "path": "/vault/hutter.cloud"
+        } }, "listener": { "tcp": { "address": "0.0.0.0:8200", "tls_cert_file": "/cert/letsencryptcert-vault/fullchain.pem",
+        "tls_key_file": "/cert/letsencryptcert-vault/privkey.pem" } }, "default_lease_ttl":
+        "168h", "max_lease_ttl": "720h" }'
+    stdin_open: true
+    volumes:
+    - vault-vault-server:/vault
+    - letsencrypt-certificates-vault:/cert
+    tty: true
+    ports:
+    - 8200:8200/tcp
+    command:
+    - vault
+    - server
+    - -config
+    - /vault/config
+    labels:
+      cloud.hutter.autofw.ip.firewall.dstnat: protocol=tcp,dstport=8200,ininterface=sfp1
+      cloud.hutter.autofw.ip.dns.static.comment: vault
+      cloud.hutter.autofw.enable: 'true'
+      cloud.hutter.autofw.ip.firewall.dstnat.comment: vault
+      cloud.hutter.autofw.ip.dns.static: name=vault.hutter.cloud
+      io.rancher.container.pull_image: always
