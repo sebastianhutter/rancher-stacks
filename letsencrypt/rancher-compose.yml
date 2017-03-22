@@ -1,0 +1,14 @@
+version: '2'
+services:
+  letsencrypt-openvpn:
+    scale: 1
+    start_on_create: true
+  letsencrypt-vault:
+    scale: 1
+    start_on_create: true
+  letsencrypt:
+    scale: 1
+    start_on_create: true
+  letsencrypt-external:
+    scale: 1
+    start_on_create: true
