@@ -1,0 +1,22 @@
+version: '2'
+services:
+  proxy:
+    image: rancher/lb-service-haproxy:v0.4.6
+    ports:
+    - 8443:8443/tcp
+    labels:
+      io.rancher.container.agent.role: environmentAdmin
+      cloud.hutter.autofw.ip.firewall.dstnat: protocol=tcp,dstport=8443,ininterface=sfp1
+      cloud.hutter.autofw.ip.dns.static.comment: reverse proxy services
+      cloud.hutter.autofw.enable: 'true'
+      cloud.hutter.autofw.ip.dns.static: name=calibre.hutter.cloud:name=usenet.hutter.cloud
+      io.rancher.container.create_agent: 'true'
+  nginx:
+    image: sebastianhutter/nginx:93dfd0f2
+    environment:
+      CONFIG_URL: http://nas.barfoot.local/dnas/docker/nginx.conf
+      INDEX_URL: http://nas.barfoot.local/dnas/docker/index.html
+    stdin_open: true
+    tty: true
+    labels:
+      io.rancher.container.pull_image: always

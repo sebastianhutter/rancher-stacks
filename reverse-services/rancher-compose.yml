@@ -1,0 +1,38 @@
+version: '2'
+services:
+  proxy:
+    scale: 1
+    start_on_create: true
+    lb_config:
+      certs: []
+      default_cert: letsencryptcert
+      port_rules:
+      - hostname: usenet.hutter.cloud
+        path: ''
+        priority: 1
+        protocol: https
+        service: nginx
+        source_port: 8443
+        target_port: 80
+      - hostname: barfoot.duckdns.org
+        priority: 2
+        protocol: https
+        service: nginx
+        source_port: 8443
+        target_port: 80
+      - hostname: calibre.hutter.cloud
+        path: ''
+        priority: 3
+        protocol: https
+        service: nginx
+        source_port: 8443
+        target_port: 80
+    health_check:
+      healthy_threshold: 2
+      response_timeout: 2000
+      port: 42
+      unhealthy_threshold: 3
+      interval: 2000
+  nginx:
+    scale: 1
+    start_on_create: true
