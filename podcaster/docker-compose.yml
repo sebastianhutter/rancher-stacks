@@ -1,0 +1,40 @@
+version: '2'
+volumes:
+  podcaster-podcaster-database:
+    driver: nfs
+    driver_opts:
+      share: nas.barfoot.local:/volume1/docker/podcaster-podcaster-database
+  podcaster-podcaster-incomplete:
+    driver: nfs
+    driver_opts:
+      share: nas.barfoot.local:/volume1/docker/podcaster-podcaster-incomplete
+services:
+  podcaster-library:
+    image: busybox
+    stdin_open: true
+    volumes:
+    - /mnt/library/podcasts:/podcasts
+    tty: true
+    command:
+    - /bin/true
+    labels:
+      io.rancher.container.pull_image: always
+      io.rancher.container.start_once: 'true'
+  podcaster:
+    image: sebastianhutter/podcaster:d0bde2f1
+    environment:
+      PODCASTER_TEMP: /incomplete
+      PODCASTER_SETTINGS: http://nas.barfoot.local/dnas/docker/podcaster.settings
+      PODCASTER_DIR: /podcasts
+      PODCASTER_DB: /db/podcaster.db
+      PODCASTER_SCHEDULE: '60'
+    stdin_open: true
+    volumes:
+    - podcaster-podcaster-database:/db
+    - podcaster-podcaster-incomplete:/incomplete
+    tty: true
+    volumes_from:
+    - podcaster-library
+    labels:
+      io.rancher.container.pull_image: always
+      io.rancher.sidekicks: podcaster-library
