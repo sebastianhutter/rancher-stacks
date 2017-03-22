@@ -1,0 +1,26 @@
+version: '2'
+services:
+  library:
+    scale: 1
+    start_on_create: true
+  sonarr-library:
+    scale: 1
+    start_on_create: true
+  nzbhydra-browser:
+    scale: 1
+    start_on_create: true
+  Sabnzbd:
+    scale: 1
+    start_on_create: true
+  couchpotato:
+    scale: 1
+    start_on_create: true
+  nzbhydra:
+    scale: 1
+    start_on_create: true
+  Sonarr:
+    scale: 1
+    start_on_create: true
+  sonarr-rtc:
+    scale: 1
+    start_on_create: true
