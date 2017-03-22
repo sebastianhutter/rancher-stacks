@@ -20,5 +20,6 @@ envcli=""
 
 # execute the stack
 pushd ${stackfolder}
-rancher up ${envcli} -d -p -u
+echo executing rancher up ${envcli} -d -p -u -c
+rancher up ${envcli} -d -p -u -c
 popd
