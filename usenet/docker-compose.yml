@@ -1,0 +1,158 @@
+version: '2'
+volumes:
+  usenet-couchpotato-database:
+    driver: nfs
+    driver_opts:
+      share: nas.barfoot.local:/volume1/docker/usenet-couchpotato-database
+  usenet-couchpotato-cache:
+    driver: nfs
+    driver_opts:
+      share: nas.barfoot.local:/volume1/docker/usenet-couchpotato-cache
+  usenet-sabnzbd-incomplete:
+    driver: nfs
+    driver_opts:
+      share: nas.barfoot.local:/volume1/docker/usenet-sabnzbd-incomplete
+  usenet-sabnzbd-complete:
+    driver: nfs
+    driver_opts:
+      share: nas.barfoot.local:/volume1/docker/usenet-sabnzbd-complete
+  usenet-nzbhydra-config:
+    driver: nfs
+    driver_opts:
+      share: nas.barfoot.local:/volume1/docker/usenet-nzbhydra-config
+  usenet-couchpotato-db_backup:
+    driver: nfs
+    driver_opts:
+      share: nas.barfoot.local:/volume1/docker/usenet-couchpotato-db_backup
+  usenet-sonarr-conf:
+    driver: nfs
+    driver_opts:
+      share: nas.barfoot.local:/volume1/docker/usenet-sonarr-conf
+  usenet-couchpotato-plugins:
+    driver: nfs
+    driver_opts:
+      share: nas.barfoot.local:/volume1/docker/usenet-couchpotato-plugins
+  usenet-sabnzbd-admin:
+    driver: nfs
+    driver_opts:
+      share: nas.barfoot.local:/volume1/docker/usenet-sabnzbd-admin
+  usenet-couchpotato-logs:
+    driver: nfs
+    driver_opts:
+      share: nas.barfoot.local:/volume1/docker/usenet-couchpotato-logs
+  usenet-nzbhydra-nzb:
+    driver: nfs
+    driver_opts:
+      share: nas.barfoot.local:/volume1/docker/usenet-nzbhydra-nzb
+  usenet-sabnzbd-logs:
+    driver: nfs
+    driver_opts:
+      share: nas.barfoot.local:/volume1/docker/usenet-sabnzbd-logs
+services:
+  library:
+    image: busybox
+    stdin_open: true
+    volumes:
+    - /mnt/library:/library
+    tty: true
+    command:
+    - /bin/true
+    labels:
+      io.rancher.container.pull_image: always
+      io.rancher.container.start_once: 'true'
+  sonarr-library:
+    image: busybox
+    stdin_open: true
+    volumes:
+    - /mnt/library/tv:/tv
+    - /mnt/library/tv_de:/tv_de
+    tty: true
+    command:
+    - /bin/true
+    labels:
+      io.rancher.container.pull_image: always
+      io.rancher.container.start_once: 'true'
+  nzbhydra-browser:
+    image: sebastianhutter/elfinder:b245c9f0
+    environment:
+      ELFINDER_FILES_URI: /nzbhydra-browser/files
+    stdin_open: true
+    volumes:
+    - /mnt/docker/usenet-sabnzbd-complete/nzbhydra:/var/www/html/files
+    tty: true
+    labels:
+      io.rancher.container.pull_image: always
+  Sabnzbd:
+    image: sebastianhutter/sabnzbd:d29f6746
+    environment:
+      SABNZBD_CONFIG_URL: http://nas.barfoot.local/dnas/docker/sabnzbd.ini
+      NZBTOMEDIA_CONFIG_URL: http://nas.barfoot.local/dnas/docker/autoProcessMedia.cfg
+    stdin_open: true
+    volumes:
+    - usenet-sabnzbd-admin:/sabnzbd/admin
+    - usenet-sabnzbd-complete:/sabnzbd/Downloads/complete
+    - usenet-sabnzbd-incomplete:/sabnzbd/Downloads/incomplete
+    - usenet-sabnzbd-logs:/sabnzbd/logs
+    tty: true
+    labels:
+      io.rancher.container.pull_image: always
+      io.rancher.scheduler.affinity:host_label_ne: last-gen=true
+  couchpotato:
+    image: sebastianhutter/couchpotato:5352a3b3
+    depends_on:
+      - Sabnzbd
+    environment:
+      COUCHPOTATO_CONFIG_URL: http://nas.barfoot.local/dnas/docker/settings.conf
+    stdin_open: true
+    volumes:
+    - usenet-couchpotato-cache:/CouchPotatoServer/cache
+    - usenet-couchpotato-plugins:/CouchPotatoServer/custom_plugins
+    - usenet-couchpotato-database:/CouchPotatoServer/database
+    - usenet-couchpotato-db_backup:/CouchPotatoServer/db_backup
+    - usenet-couchpotato-logs:/CouchPotatoServer/logs
+    - usenet-sabnzbd-incomplete:/sabnzbd/Downloads/incomplete
+    - usenet-sabnzbd-complete:/sabnzbd/Downloads/complete
+    tty: true
+    volumes_from:
+    - library
+    labels:
+      io.rancher.container.pull_image: always
+      io.rancher.sidekicks: library
+  nzbhydra:
+    image: linuxserver/hydra
+    stdin_open: true
+    volumes:
+    - usenet-nzbhydra-config:/config
+    - usenet-nzbhydra-nzb:/downloads
+    tty: true
+    labels:
+      io.rancher.container.pull_image: always
+  Sonarr:
+    image: linuxserver/sonarr
+    depends_on:
+      - Sabnzbd
+    environment:
+      PGID: '0'
+      PUID: '0'
+    stdin_open: true
+    volumes:
+    - usenet-sabnzbd-complete:/sabnzbd/Downloads/complete
+    - usenet-sonarr-conf:/config
+    tty: true
+    volumes_from:
+    - sonarr-library
+    - sonarr-rtc
+    labels:
+      io.rancher.container.pull_image: always
+      io.rancher.sidekicks: sonarr-library,sonarr-rtc
+  sonarr-rtc:
+    image: busybox
+    stdin_open: true
+    volumes:
+    - /dev/rtc:/dev/rtc:ro
+    tty: true
+    command:
+    - /bin/true
+    labels:
+      io.rancher.container.pull_image: always
+      io.rancher.container.start_once: 'true'
