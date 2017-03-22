@@ -1,0 +1,8 @@
+version: '2'
+services:
+  calibre-privat:
+    scale: 1
+    start_on_create: true
+  calibre-david:
+    scale: 1
+    start_on_create: true

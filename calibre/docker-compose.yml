@@ -1,0 +1,22 @@
+version: '2'
+services:
+  calibre-privat:
+    image: sebastianhutter/calibreserver:e729344b
+    environment:
+      PREFIX_URL: /sebastian
+    stdin_open: true
+    volumes:
+    - /mnt/calibre/personal:/library
+    tty: true
+    labels:
+      io.rancher.container.pull_image: always
+  calibre-david:
+    image: sebastianhutter/calibreserver:e729344b
+    environment:
+      PREFIX_URL: /david
+    stdin_open: true
+    volumes:
+    - /mnt/calibre/davids:/library
+    tty: true
+    labels:
+      io.rancher.container.pull_image: always
