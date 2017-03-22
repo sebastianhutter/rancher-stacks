@@ -3,3 +3,4 @@
 /keyrings/live/secring.gpg
 /tikautofw/env
 /letsencrypt/env
+/openvpn-server/env
