@@ -1,0 +1,21 @@
+version: '2'
+services:
+  tikautofw:
+    image: sebastianhutter/tikautofw:aafa3670
+    environment:
+      AUTOFW_SCHEDULE: '30'
+      AUTOFW_LOGLEVEL: debug
+      AUTOFW_VAULT_SERVER: https://vault.hutter.cloud:8200
+      AUTOFW_VAULT_ROLE_ID: dede3667-e5ec-e529-9b90-c2fdb98424c9
+      AUTOFW_MIKROTIK_ADDRESS: 192.168.30.1
+      AUTOFW_RANCHER_API_URL: https://rancher.hutter.cloud:8080/v2-beta/projects/1a5
+      AUTOFW_VAULT_SECRET_ID: dfd3473e-1161-c141-5ac4-3421e3d7b29d
+    stdin_open: true
+    tty: true
+    logging:
+      driver: json-file
+      options:
+        max-size: 20m
+        max-file: '5'
+    labels:
+      io.rancher.container.pull_image: always
