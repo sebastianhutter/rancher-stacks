@@ -27,22 +27,22 @@ services:
   gocd-server:
     image: sebastianhutter/gocd-server
     environment:
-      GOCD_SITEURL: http://ci.hutter.cloud:8153
-      GOCD_SECURESITEURL: https://ci.hutter.cloud:8154
-      GOCD_AGENTAUTOREGISTERKEY: WORE-except-MAYOR-OSLO
-      GOCD_LDAPURI: ldap://nas.barfoot.local
-      GOCD_LDAPMANAGERDN: uid=root,cn=users,dc=barfoot,dc=local
-      GOCD_LDAPMANAGERPASSWORD: 8114DEpD0z0si4xeA5yZ
-      GOCD_LDAPSEARCHFILTER: (uid={0})
-      GOCD_LDAPSEARCHBASE: cn=users,dc=barfoot,dc=local
-      GOCD_LDAPADMINUSER: sebastian
-      GOCD_YAML_REPOSITORIES: sebastianhutter/tikautofw sebastianhutter/podcaster sebastianhutter/docker-sabnzbd sebastianhutter/docker-openvpnas sebastianhutter/docker-nginx sebastianhutter/docker-gocd-server sebastianhutter/docker-gocd-agent sebastianhutter/docker-git sebastianhutter/docker-elfinder sebastianhutter/docker-calibreserver sebastianhutter/docker-ffmpeg sebastianhutter/docker-couchpotato
-      VAULT_SERVER: https://vault.hutter.cloud:8200
-      VAULT_ROLE_ID: 8b47635b-3017-1c7e-8eb0-ee083e31b6ce
-      VAULT_SECRET_ID: 29c9f19a-a95a-1422-5260-7f0f29798ef0
-      VAULT_SECRET_DOCKER_USER: secret/hub.docker.com/gocd/username
-      VAULT_SECRET_DOCKER_PASS: secret/hub.docker.com/gocd/password
-      VAULT_SECRET_GITHUB_KEY: secret/github/gocd/private
+      GOCD_SITEURL:
+      GOCD_SECURESITEURL:
+      GOCD_AGENTAUTOREGISTERKEY:
+      GOCD_LDAPURI:
+      GOCD_LDAPMANAGERDN:
+      GOCD_LDAPMANAGERPASSWORD:
+      GOCD_LDAPSEARCHFILTER:
+      GOCD_LDAPSEARCHBASE:
+      GOCD_LDAPADMINUSER:
+      GOCD_YAML_REPOSITORIES:
+      VAULT_SERVER:
+      VAULT_ROLE_ID:
+      VAULT_SECRET_ID:
+      VAULT_SECRET_DOCKER_USER:
+      VAULT_SECRET_DOCKER_PASS:
+      VAULT_SECRET_GITHUB_KEY:
     stdin_open: true
     volumes:
     - gocd-gocd-server-etc:/etc/go
@@ -54,14 +54,14 @@ services:
   gocd-agent:
     image: sebastianhutter/gocd-agent
     environment:
-      VAULT_SERVER: https://vault.hutter.cloud:8200
-      VAULT_ROLE_ID: 8b47635b-3017-1c7e-8eb0-ee083e31b6ce
-      VAULT_SECRET_ID: 29c9f19a-a95a-1422-5260-7f0f29798ef0
-      VAULT_SECRET_DOCKER_USER: secret/hub.docker.com/gocd/username
-      VAULT_SECRET_DOCKER_PASS: secret/hub.docker.com/gocd/password
-      VAULT_SECRET_GITHUB_KEY: secret/github/gocd/private
-      GO_SERVER_URL: https://gocd-server.gocd.rancher.internal:8154/go
-      VAULT_SECRET_RANCHER_API: secret/rancher/api/home/gocd
+      VAULT_SERVER:
+      VAULT_ROLE_ID:
+      VAULT_SECRET_ID:
+      VAULT_SECRET_DOCKER_USER:
+      VAULT_SECRET_DOCKER_PASS:
+      VAULT_SECRET_GITHUB_KEY:
+      GO_SERVER_URL:
+      VAULT_SECRET_RANCHER_API:
     stdin_open: true
     volumes:
     - /var/run/docker.sock:/var/run/docker.sock:ro
