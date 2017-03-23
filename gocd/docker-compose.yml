@@ -43,6 +43,8 @@ services:
       VAULT_SECRET_DOCKER_USER:
       VAULT_SECRET_DOCKER_PASS:
       VAULT_SECRET_GITHUB_KEY:
+      MSG_TIME:
+      AGENT_AUTO_REGISTER_KEY: ${GOCD_AGENTAUTOREGISTERKEY}
     stdin_open: true
     volumes:
     - gocd-gocd-server-etc:/etc/go
@@ -62,6 +64,7 @@ services:
       VAULT_SECRET_GITHUB_KEY:
       GO_SERVER_URL:
       VAULT_SECRET_RANCHER_API:
+      AGENT_AUTO_REGISTER_KEY: ${GOCD_AGENTAUTOREGISTERKEY}
     stdin_open: true
     volumes:
     - /var/run/docker.sock:/var/run/docker.sock:ro
