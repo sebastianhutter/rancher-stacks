@@ -1,0 +1,18 @@
+version: '2'
+services:
+  statuspage:
+    image: sebastianhutter/statuspage:latest
+    environment:
+      CHECKHTTP_YAML_FILE:
+      VAULT_SERVER:
+      VAULT_ROLE_ID:
+      VAULT_SECRET_HTTP_CREDENTIALS:
+    stdin_open: true
+    tty: true
+    logging:
+      driver: json-file
+      options:
+        max-size: 20m
+        max-file: '5'
+    labels:
+      io.rancher.container.pull_image: always
