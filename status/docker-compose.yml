@@ -1,12 +1,14 @@
 version: '2'
 services:
   statuspage:
-    image: sebastianhutter/statuspage:latest
+    image: sebastianhutter/checkhttp:latest
     environment:
       CHECKHTTP_YAML_FILE:
       VAULT_SERVER:
       VAULT_ROLE_ID:
+      VAULT_SECRET_ID:
       VAULT_SECRET_HTTP_CREDENTIALS:
+      CHECKHTTP_WAIT_TIME:
     stdin_open: true
     tty: true
     logging:
