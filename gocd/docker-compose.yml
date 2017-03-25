@@ -12,7 +12,6 @@ volumes:
     driver: nfs
     driver_opts:
       share: nas.barfoot.local:/volume1/docker/gocd-gocd-server-db
-services:
   gocd-gocd-server-logs:
     driver: nfs
     driver_opts:
@@ -30,7 +29,7 @@ services:
       cloud.hutter.autofw.enable: 'true'
       io.rancher.container.create_agent: 'true'
   gocd-server:
-    image: sebastianhutter/gocd-server
+    image: sebastianhutter/gocd-server:e9f97686
     environment:
       GOCD_SITEURL:
       GOCD_SECURESITEURL:
