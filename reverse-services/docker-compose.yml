@@ -11,7 +11,7 @@ services:
       cloud.hutter.autofw.enable: 'true'
       cloud.hutter.autofw.ip.dns.static: name=calibre.hutter.cloud:name=usenet.hutter.cloud:name=status.hutter.cloud
       io.rancher.container.create_agent: 'true'
-  nginx:
+  reverse-nginx:
     image: sebastianhutter/nginx:93dfd0f2
     environment:
       CONFIG_URL: http://nas.barfoot.local/dnas/docker/nginx.conf

@@ -11,20 +11,20 @@ services:
         path: ''
         priority: 1
         protocol: https
-        service: nginx
+        service: reverse-nginx
         source_port: 8443
         target_port: 80
       - hostname: barfoot.duckdns.org
         priority: 2
         protocol: https
-        service: nginx
+        service: reverse-nginx
         source_port: 8443
         target_port: 80
       - hostname: calibre.hutter.cloud
         path: ''
         priority: 3
         protocol: https
-        service: nginx
+        service: reverse-nginx
         source_port: 8443
         target_port: 80
       - hostname: status.hutter.cloud
@@ -40,6 +40,6 @@ services:
       port: 42
       unhealthy_threshold: 3
       interval: 2000
-  nginx:
+  reverse-nginx:
     scale: 1
     start_on_create: true
