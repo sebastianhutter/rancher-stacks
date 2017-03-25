@@ -1,17 +1,22 @@
 version: '2'
 volumes:
-  gocd-gocd-server-lib:
+  gocd-gocd-server-artifacts:
     driver: nfs
     driver_opts:
-      share: nas.barfoot.local:/volume1/docker/gocd-gocd-server-lib
-  gocd-gocd-server-etc:
+      share: nas.barfoot.local:/volume1/docker/gocd-gocd-server-artifacts
+  gocd-gocd-server-config:
     driver: nfs
     driver_opts:
-      share: nas.barfoot.local:/volume1/docker/gocd-gocd-server-etc
-  gocd-gocd-server-log:
+      share: nas.barfoot.local:/volume1/docker/gocd-gocd-server-config
+  gocd-gocd-server-db:
     driver: nfs
     driver_opts:
-      share: nas.barfoot.local:/volume1/docker/gocd-gocd-server-log
+      share: nas.barfoot.local:/volume1/docker/gocd-gocd-server-db
+services:
+  gocd-gocd-server-logs:
+    driver: nfs
+    driver_opts:
+      share: nas.barfoot.local:/volume1/docker/gocd-gocd-server-logs
 services:
   loadbalancer:
     image: rancher/lb-service-haproxy:v0.4.6
@@ -47,9 +52,10 @@ services:
       AGENT_AUTO_REGISTER_KEY: ${GOCD_AGENTAUTOREGISTERKEY}
     stdin_open: true
     volumes:
-    - gocd-gocd-server-etc:/etc/go
-    - gocd-gocd-server-lib:/var/lib/go-server
-    - gocd-gocd-server-log:/var/log/go-server
+    - gocd-gocd-server-artifacts:/godata/artifacts
+    - gocd-gocd-server-config:/godata/config
+    - gocd-gocd-server-db:/godata/db
+    - gocd-gocd-server-logs:/godata/logs
     tty: true
     labels:
       io.rancher.container.pull_image: always
