@@ -1,21 +1,17 @@
 version: '2'
 volumes:
-  gocd-gocd-server-artifacts:
-    driver: nfs
-    driver_opts:
-      share: nas.barfoot.local:/volume1/docker/gocd-gocd-server-artifacts
-  gocd-gocd-server-config:
-    driver: nfs
-    driver_opts:
-      share: nas.barfoot.local:/volume1/docker/gocd-gocd-server-config
   gocd-gocd-server-db:
     driver: nfs
     driver_opts:
       share: nas.barfoot.local:/volume1/docker/gocd-gocd-server-db
-  gocd-gocd-server-logs:
+  gocd-gocd-server-etc:
     driver: nfs
     driver_opts:
-      share: nas.barfoot.local:/volume1/docker/gocd-gocd-server-logs
+      share: nas.barfoot.local:/volume1/docker/gocd-gocd-server-etc
+  gocd-gocd-server-artifacts:
+    driver: nfs
+    driver_opts:
+      share: nas.barfoot.local:/volume1/docker/gocd-gocd-server-artifacts
 services:
   loadbalancer:
     image: rancher/lb-service-haproxy:v0.4.6
@@ -29,7 +25,7 @@ services:
       cloud.hutter.autofw.enable: 'true'
       io.rancher.container.create_agent: 'true'
   gocd-server:
-    image: sebastianhutter/gocd-server:e9f97686
+    image: sebastianhutter/gocd-server:latest
     environment:
       GOCD_SITEURL:
       GOCD_SECURESITEURL:
@@ -47,19 +43,18 @@ services:
       VAULT_SECRET_DOCKER_USER:
       VAULT_SECRET_DOCKER_PASS:
       VAULT_SECRET_GITHUB_KEY:
+      GOCD_ENABLE_LDAP:
       MSG_TIME:
-      AGENT_AUTO_REGISTER_KEY: ${GOCD_AGENTAUTOREGISTERKEY}
     stdin_open: true
     volumes:
-    - gocd-gocd-server-artifacts:/godata/artifacts
-    - gocd-gocd-server-config:/godata/config
-    - gocd-gocd-server-db:/godata/db
-    - gocd-gocd-server-logs:/godata/logs
+    - gocd-gocd-server-etc:/etc/go
+    - gocd-gocd-server-db:/var/lib/go-server/db
+    - gocd-gocd-server-artifacts:/var/lib/go-server/artifacts
     tty: true
     labels:
       io.rancher.container.pull_image: always
   gocd-agent:
-    image: sebastianhutter/gocd-agent
+    image: sebastianhutter/gocd-agent:latest
     environment:
       VAULT_SERVER:
       VAULT_ROLE_ID:
@@ -68,8 +63,8 @@ services:
       VAULT_SECRET_DOCKER_PASS:
       VAULT_SECRET_GITHUB_KEY:
       GO_SERVER_URL:
+      GOCD_AGENTAUTOREGISTERKEY:
       VAULT_SECRET_RANCHER_API:
-      AGENT_AUTO_REGISTER_KEY: ${GOCD_AGENTAUTOREGISTERKEY}
     stdin_open: true
     volumes:
     - /var/run/docker.sock:/var/run/docker.sock:ro
