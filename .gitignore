@@ -1,9 +1,9 @@
 /keyrings/live/pubring.gpg~
 /keyrings/live/pubring.kbx~
 /keyrings/live/secring.gpg
-/tikautofw/env
-/letsencrypt/env
-/openvpn-server/env
-/gocd/env
-/status/env
-/watcher/env
+/./gocd/env
+/./letsencrypt/env
+/./openvpn-server/env
+/./status/env
+/./tikautofw/env
+/./watcher/env
