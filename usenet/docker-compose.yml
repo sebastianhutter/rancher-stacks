@@ -82,6 +82,8 @@ services:
     tty: true
     labels:
       io.rancher.container.pull_image: always
+      cloud.hutter.watcher.ip.enable: true
+      cloud.hutter.watcher.ip.reboot: reverse-services-reverse-nginx-1,status-statuspage-1
   Sabnzbd:
     image: sebastianhutter/sabnzbd:d29f6746
     environment:
@@ -97,6 +99,8 @@ services:
     labels:
       io.rancher.container.pull_image: always
       io.rancher.scheduler.affinity:host_label_ne: last-gen=true
+      cloud.hutter.watcher.ip.enable: true
+      cloud.hutter.watcher.ip.reboot: reverse-services-reverse-nginx-1,status-statuspage-1,usenet-Sonarr-1,usenet-couchpotato-1
   couchpotato:
     image: sebastianhutter/couchpotato:5352a3b3
     depends_on:
@@ -118,6 +122,8 @@ services:
     labels:
       io.rancher.container.pull_image: always
       io.rancher.sidekicks: library
+      cloud.hutter.watcher.ip.enable: true
+      cloud.hutter.watcher.ip.reboot: reverse-services-reverse-nginx-1,status-statuspage-1
   nzbhydra:
     image: linuxserver/hydra
     stdin_open: true
@@ -127,6 +133,8 @@ services:
     tty: true
     labels:
       io.rancher.container.pull_image: always
+      cloud.hutter.watcher.ip.enable: true
+      cloud.hutter.watcher.ip.reboot: reverse-services-reverse-nginx-1,status-statuspage-1
   Sonarr:
     image: linuxserver/sonarr
     depends_on:
@@ -145,6 +153,8 @@ services:
     labels:
       io.rancher.container.pull_image: always
       io.rancher.sidekicks: sonarr-library,sonarr-rtc
+      cloud.hutter.watcher.ip.enable: true
+      cloud.hutter.watcher.ip.reboot: reverse-services-reverse-nginx-1,status-statuspage-1
   sonarr-rtc:
     image: busybox
     stdin_open: true

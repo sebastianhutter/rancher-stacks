@@ -10,6 +10,8 @@ services:
     tty: true
     labels:
       io.rancher.container.pull_image: always
+      cloud.hutter.watcher.ip.enable: true
+      cloud.hutter.watcher.ip.reboot: reverse-services-reverse-nginx-1,
   calibre-david:
     image: sebastianhutter/calibreserver:e729344b
     environment:

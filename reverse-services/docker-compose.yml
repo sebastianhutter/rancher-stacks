@@ -20,3 +20,5 @@ services:
     tty: true
     labels:
       io.rancher.container.pull_image: always
+      cloud.hutter.watcher.ip.enable: true
+      cloud.hutter.watcher.ip.reboot: status-statuspage-1

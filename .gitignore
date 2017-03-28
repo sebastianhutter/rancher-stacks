@@ -6,3 +6,4 @@
 /openvpn-server/env
 /gocd/env
 /status/env
+/watcher/env

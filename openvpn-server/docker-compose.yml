@@ -9,7 +9,7 @@ services:
     cap_add:
     - NET_ADMIN
     - NET_RAW
-    image: sebastianhutter/openvpnas:fcf764ef
+    image: sebastianhutter/openvpnas:latest
     environment:
       OPENVPN_PASSWORD:
     devices:
@@ -32,3 +32,5 @@ services:
       cloud.hutter.autofw.ip.firewall.dstnat.comment: openvpn services tcp943-admin tcp944-client tcp443-vpn udp1194-vpn
       io.rancher.container.pull_image: always
       io.rancher.scheduler.affinity:host_label_ne: last-gen=true
+      cloud.hutter.watcher.ip.enable: true
+      cloud.hutter.watcher.ip.reboot: status-statuspage-1
