@@ -2,6 +2,7 @@
 ./letsencrypt/env
 ./openvpn-server/env
 ./status/env
+./tikautofw/env
 gocd/env
 letsencrypt/env
 openvpn-server/env
