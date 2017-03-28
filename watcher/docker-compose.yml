@@ -1,0 +1,18 @@
+version: '2'
+services:
+  watcher:
+    image: sebastianhutter/watcher:latest
+    environment:
+      WATCHER_RANCHER_API_URL:
+      WATCHER_VAULT_SERVER:
+      WATCHER_VAULT_ROLE_ID:
+      WATCHER_VAULT_SECRET_ID:
+    stdin_open: true
+    tty: true
+    logging:
+      driver: json-file
+      options:
+        max-size: 20m
+        max-file: '5'
+    labels:
+      io.rancher.container.pull_image: always

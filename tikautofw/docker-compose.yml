@@ -1,7 +1,7 @@
 version: '2'
 services:
   tikautofw:
-    image: sebastianhutter/tikautofw:aafa3670
+    image: sebastianhutter/tikautofw:latest
     environment:
       AUTOFW_SCHEDULE:
       AUTOFW_LOGLEVEL:

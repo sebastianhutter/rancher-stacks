@@ -73,7 +73,7 @@ services:
       io.rancher.container.pull_image: always
       io.rancher.container.start_once: 'true'
   nzbhydra-browser:
-    image: sebastianhutter/elfinder:b245c9f0
+    image: sebastianhutter/elfinder:latest
     environment:
       ELFINDER_FILES_URI: /nzbhydra-browser/files
     stdin_open: true
@@ -85,7 +85,7 @@ services:
       cloud.hutter.watcher.ip.enable: true
       cloud.hutter.watcher.ip.reboot: reverse-services-reverse-nginx-1,status-statuspage-1
   Sabnzbd:
-    image: sebastianhutter/sabnzbd:d29f6746
+    image: sebastianhutter/sabnzbd:latest
     environment:
       SABNZBD_CONFIG_URL: http://nas.barfoot.local/dnas/docker/sabnzbd.ini
       NZBTOMEDIA_CONFIG_URL: http://nas.barfoot.local/dnas/docker/autoProcessMedia.cfg
@@ -102,7 +102,7 @@ services:
       cloud.hutter.watcher.ip.enable: true
       cloud.hutter.watcher.ip.reboot: reverse-services-reverse-nginx-1,status-statuspage-1,usenet-Sonarr-1,usenet-couchpotato-1
   couchpotato:
-    image: sebastianhutter/couchpotato:5352a3b3
+    image: sebastianhutter/couchpotato:latest
     depends_on:
       - Sabnzbd
     environment:
