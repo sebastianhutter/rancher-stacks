@@ -1,3 +1,4 @@
+./gocd/env
 gocd/env
 letsencrypt/env
 openvpn-server/env
