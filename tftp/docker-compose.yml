@@ -1,0 +1,19 @@
+version: '2'
+volumes:
+  tftp-tftp-data:
+    driver: nfs
+    driver_opts:
+      share: nas.barfoot.local:/volume1/docker/tftp-tftp-data
+services:
+  tftp-server:
+    image: pghalliday/tftp
+    stdin_open: true
+    volumes:
+    - tftp-tftp-data:/var/tftpboot:ro
+    tty: true
+    ports:
+    - 69:69/udp
+    labels:
+      io.rancher.container.pull_image: always
+      # make sure the haproxy is started on node00 -> mikrotik dhcp option next server points to this system
+      io.rancher.scheduler.affinity:host_label: name=node00
