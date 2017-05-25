@@ -17,3 +17,6 @@ services:
       io.rancher.container.pull_image: always
       # make sure the haproxy is started on node00 -> mikrotik dhcp option next server points to this system
       io.rancher.scheduler.affinity:host_label: name=node00
+      cloud.hutter.autofw.ip.dns.static.comment: tftp service
+      cloud.hutter.autofw.enable: 'true'
+      cloud.hutter.autofw.ip.dns.static: name=tftp.hutter.cloud
