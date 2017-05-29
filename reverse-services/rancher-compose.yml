@@ -5,6 +5,9 @@ services:
     start_on_create: true
     lb_config:
       certs: []
+      config: |-
+        timeout server 1800s
+        timeout client 1800s
       default_cert: letsencryptcert
       port_rules:
       - hostname: usenet.hutter.cloud
