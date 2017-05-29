@@ -55,6 +55,7 @@ services:
       io.rancher.container.pull_image: always
       cloud.hutter.watcher.ip.enable: true
       cloud.hutter.watcher.ip.reboot: reverse-services-reverse-nginx-1,status-statuspage-1
+      io.rancher.scheduler.affinity:host_label: "fast=true"
   gocd-agent:
     image: sebastianhutter/gocd-agent:latest
     environment:
