@@ -34,6 +34,13 @@ services:
         service: status/statuspage
         source_port: 8443
         target_port: 8080
+      - hostname: scm.hutter.cloud
+        path: ''
+        priority: 3
+        protocol: https
+        service: scm-webdav/nginx
+        source_port: 8443
+        target_port: 80
     health_check:
       healthy_threshold: 2
       response_timeout: 2000
