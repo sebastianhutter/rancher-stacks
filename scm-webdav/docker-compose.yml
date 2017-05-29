@@ -1,0 +1,13 @@
+version: '2'
+
+services:
+  nginx:
+    image: sebastianhutter/nginx:latest
+    stdin_open: true
+    volumes:
+    - /mnt/web/dnas/scm:/www
+    tty: true
+    environment:
+      CONFIG_URL: http://nas.barfoot.local/dnas/docker/scm-webdav.conf
+    labels:
+      io.rancher.container.pull_image: always
