@@ -16,6 +16,10 @@ volumes:
     driver: nfs
     driver_opts:
       share: nas.barfoot.local:/volume1/docker/letsencrypt-certificates-external
+  letsencrypt-certificates-nas:
+    driver: nfs
+    driver_opts:
+      share: nas.barfoot.local:/volume1/docker/letsencrypt-certificates-nas
 services:
   letsencrypt-openvpn:
     image: janeczku/rancher-letsencrypt:v0.4.0
@@ -112,6 +116,32 @@ services:
       DNSIMPLE_EMAIL: ''
       DNSIMPLE_KEY: ''
       DOMAINS: rancher.hutter.cloud
+      DO_ACCESS_TOKEN: ''
+      DYN_CUSTOMER_NAME: ''
+      DYN_PASSWORD: ''
+      DYN_USER_NAME: ''
+      EMAIL: mail@sebastian-hutter.ch
+      EULA: 'Yes'
+      PROVIDER: Route53
+      PUBLIC_KEY_TYPE: RSA-2048
+      RENEWAL_TIME: '12'
+    volumes:
+    - letsencrypt-certificates-external:/etc/letsencrypt/production/certs
+    labels:
+      io.rancher.container.agent.role: environment
+      io.rancher.container.create_agent: 'true'
+  letsencrypt-nas:
+    image: janeczku/rancher-letsencrypt:v0.4.0
+    environment:
+      API_VERSION: Production
+      AWS_ACCESS_KEY:
+      AWS_SECRET_KEY:
+      CERT_NAME: letsencryptcert-nas
+      CLOUDFLARE_EMAIL: ''
+      CLOUDFLARE_KEY: ''
+      DNSIMPLE_EMAIL: ''
+      DNSIMPLE_KEY: ''
+      DOMAINS: nas.hutter.cloud
       DO_ACCESS_TOKEN: ''
       DYN_CUSTOMER_NAME: ''
       DYN_PASSWORD: ''
