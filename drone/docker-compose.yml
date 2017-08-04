@@ -1,0 +1,53 @@
+version: '2'
+volumes:
+  drone-drone-server-lib:
+    driver: nfs
+    driver_opts:
+      share: nas.barfoot.local:/volume1/docker/drone-drone-server-lib
+services:
+  loadbalancer:
+    image: rancher/lb-service-haproxy:v0.7.8
+    ports:
+    - 8000:8000/tcp
+    labels:
+      io.rancher.container.agent.role: environmentAdmin
+      cloud.hutter.autofw.ip.firewall.dstnat: protocol=tcp,dstport=8000,ininterface=sfp1
+      cloud.hutter.autofw.ip.dns.static.comment: drone ci
+      cloud.hutter.autofw.ip.dns.static: name=drone.hutter.cloud
+      cloud.hutter.autofw.enable: 'true'
+      io.rancher.container.create_agent: 'true'
+  drone-server:
+    image: drone/drone:0.8
+    environment:
+      DRONE_DEBUG: true
+      DRONE_OPEN: true
+      ###DRONE_ORGS: huttercloud
+      DRONE_GITHUB: true
+      DRONE_GITHUB_CLIENT:
+      DRONE_GITHUB_SECRET:
+      DRONE_SECRET:
+      DRONE_HOST: localhost
+    stdin_open: true
+    volumes:
+    - drone-drone-server-lib:/var/lib/drone/
+    tty: true
+    labels:
+      io.rancher.container.pull_image: always
+      cloud.hutter.watcher.ip.enable: true
+      cloud.hutter.watcher.ip.reboot: reverse-services-reverse-nginx-1,status-statuspage-1
+      io.rancher.scheduler.affinity:host_label: "fast=true"
+  drone-agent:
+    image: drone/drone:0.8
+    environment:
+      DRONE_SERVER: ws://drone.hutter.cloud:8000/ws/broker
+      DRONE_SECRET:
+      DRONE_HOST: localhost
+      DRONE_GITHUB: true
+    stdin_open: true
+    command: agent
+    volumes:
+    - /var/run/docker.sock:/var/run/docker.sock:ro
+    tty: true
+    labels:
+      io.rancher.container.pull_image: always
+      io.rancher.scheduler.global: 'true'
