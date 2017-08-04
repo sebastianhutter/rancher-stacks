@@ -1,0 +1,18 @@
+version: '2'
+services:
+  siroop-squid:
+    image: sebastianhutter/squid:latest
+    ports:
+      - 63128:3128/tcp
+    environment:
+      CONFIG_URL: http://nas.barfoot.local/dnas/docker/siroop-squid.conf
+    stdin_open: true
+    tty: true
+    labels:
+      io.rancher.container.pull_image: always
+      cloud.hutter.watcher.ip.enable: true
+      cloud.hutter.watcher.ip.reboot: status-statuspage-1
+      cloud.hutter.autofw.ip.firewall.dstnat: protocol=tcp,dstport=63128,ininterface=sfp1
+      cloud.hutter.autofw.ip.dns.static.comment: reverse proxy services
+      cloud.hutter.autofw.enable: 'true'
+      cloud.hutter.autofw.ip.dns.static: name=siroop-squid.hutter.cloud
