@@ -4,6 +4,7 @@
 ./status/env
 ./tikautofw/env
 ./watcher/env
+drone/env
 gocd/env
 letsencrypt/env
 openvpn-server/env
