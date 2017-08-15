@@ -8,7 +8,7 @@
 # creates the volumes on all hosts
 
 for s in $(grep -r "share: nas.barfoot.local" ./*/* | awk '{print $3}'); do
-	ssh node00 sudo docker volume create --driver nfs --name $s
+  ssh node00 sudo docker volume create --driver nfs --name $s
   ssh node01 sudo docker volume create --driver nfs --name $s
   ssh node02 sudo docker volume create --driver nfs --name $s
 done
