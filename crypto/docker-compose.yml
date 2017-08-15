@@ -1,0 +1,30 @@
+version: '2'
+volumes:
+  crypto-wallets-database:
+    driver: nfs
+    driver_opts:
+      share: nas.barfoot.local:/volume1/docker/crypto-wallets-database
+
+services:
+
+  wallets:
+    image: sebastianhutter/wallets:latest
+    environment:
+      WALLETS_KRAKEN_KEY:
+      WALLETS_KRAKEN_SECRET:
+      WALLETS_BITFINEX_KEY:
+      WALLETS_BITFINEX_SECRET:
+      WALLETS_DATABASE: /data/wallets.db
+      WALLETS_SCHEDULE: 300
+      WALLETS_SCAN_ON_START: true
+      WALLETS_WEBSITE: true
+    stdin_open: true
+    volumes:
+      - crypto-wallets-database:/data
+    tty: true
+    labels:
+      io.rancher.container.pull_image: always
+      io.rancher.scheduler.affinity:host_label_ne: last-gen=true
+      cloud.hutter.watcher.ip.enable: true
+      cloud.hutter.watcher.ip.reboot: reverse-services-reverse-nginx-1,status-statuspage-1
+ 

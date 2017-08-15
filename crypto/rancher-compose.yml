@@ -1,0 +1,4 @@
+version: '2'
+services:
+  wallets:
+    start_on_create: true
