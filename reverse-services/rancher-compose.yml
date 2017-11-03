@@ -44,6 +44,20 @@ services:
         service: scm-webdav/nginx
         source_port: 8443
         target_port: 80
+      - hostname: pizza-media.hutter.cloud
+        path: ''
+        priority: 3
+        protocol: https
+        service: pizza/media
+        source_port: 8443
+        target_port: 80
+      - hostname: pizza-api.hutter.cloud
+        path: ''
+        priority: 3
+        protocol: https
+        service: pizza/api
+        source_port: 8443
+        target_port: 80
     health_check:
       healthy_threshold: 2
       response_timeout: 2000
