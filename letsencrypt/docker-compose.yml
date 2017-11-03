@@ -22,7 +22,7 @@ volumes:
       share: nas.barfoot.local:/volume1/docker/letsencrypt-certificates-nas
 services:
   letsencrypt-openvpn:
-    image: janeczku/rancher-letsencrypt:v0.4.0
+    image: janeczku/rancher-letsencrypt:v0.5.0
     environment:
       API_VERSION: Production
       AWS_ACCESS_KEY:
@@ -48,7 +48,7 @@ services:
       io.rancher.container.agent.role: environment
       io.rancher.container.create_agent: 'true'
   letsencrypt-vault:
-    image: janeczku/rancher-letsencrypt:v0.4.0
+    image: janeczku/rancher-letsencrypt:v0.5.0
     environment:
       API_VERSION: Production
       AWS_ACCESS_KEY:
@@ -74,7 +74,7 @@ services:
       io.rancher.container.agent.role: environment
       io.rancher.container.create_agent: 'true'
   letsencrypt:
-    image: janeczku/rancher-letsencrypt:v0.4.0
+    image: janeczku/rancher-letsencrypt:v0.5.0
     environment:
       API_VERSION: Production
       AWS_ACCESS_KEY:
@@ -105,7 +105,7 @@ services:
       io.rancher.container.agent.role: environment
       io.rancher.container.create_agent: 'true'
   letsencrypt-external:
-    image: janeczku/rancher-letsencrypt:v0.4.0
+    image: janeczku/rancher-letsencrypt:v0.5.0
     environment:
       API_VERSION: Production
       AWS_ACCESS_KEY:
@@ -131,7 +131,7 @@ services:
       io.rancher.container.agent.role: environment
       io.rancher.container.create_agent: 'true'
   letsencrypt-nas:
-    image: janeczku/rancher-letsencrypt:v0.4.0
+    image: janeczku/rancher-letsencrypt:v0.5.0
     environment:
       API_VERSION: Production
       AWS_ACCESS_KEY:
