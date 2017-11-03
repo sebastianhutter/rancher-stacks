@@ -84,7 +84,7 @@ services:
       CLOUDFLARE_KEY: ''
       DNSIMPLE_EMAIL: ''
       DNSIMPLE_KEY: ''
-      DOMAINS: usenet.hutter.cloud,ci.hutter.cloud,calibre.hutter.cloud,status.hutter.cloud,password.hutter.cloud,scm.hutter.cloud
+      DOMAINS: usenet.hutter.cloud,ci.hutter.cloud,calibre.hutter.cloud,status.hutter.cloud,password.hutter.cloud,scm.hutter.cloud,drone.hutter.cloud,pizza-api.hutter.cloud,pizza-media.hutter.cloud
       DO_ACCESS_TOKEN: ''
       DYN_CUSTOMER_NAME: ''
       DYN_PASSWORD: ''
