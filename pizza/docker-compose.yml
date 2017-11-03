@@ -1,0 +1,23 @@
+version: '2'
+volumes:
+  pizza-media:
+    driver: nfs
+    driver_opts:
+      share: nas.barfoot.local:/volume1/docker/pizza-media
+services:
+  media:
+    image: nginx:alpine
+    stdin_open: true
+    volumes:
+      - pizza-media:/usr/share/nginx/html:ro
+    tty: true
+    labels:
+      io.rancher.container.pull_image: always
+      cloud.hutter.watcher.ip.enable: false
+      io.rancher.scheduler.affinity:host_label: "fast=true"
+  api:
+    image: nginx:alpine 
+    stdin_open: true
+    tty: true
+    labels:
+      io.rancher.container.pull_image: always
