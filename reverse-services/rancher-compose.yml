@@ -48,14 +48,14 @@ services:
         path: ''
         priority: 3
         protocol: https
-        service: pizza/media
+        service: ffhs-pizza/pizza-media
         source_port: 8443
         target_port: 80
       - hostname: pizza-api.hutter.cloud
         path: ''
         priority: 3
         protocol: https
-        service: pizza/api
+        service: ffhs-pizza/pizza-api
         source_port: 8443
         target_port: 80
     health_check:
