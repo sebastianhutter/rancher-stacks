@@ -1,8 +1,8 @@
 version: '2'
 services:
-  media:
+  pizza-media:
     scale: 1
     start_on_create: true
-  api:
+  pizza-api:
     scale: 1
     start_on_create: true

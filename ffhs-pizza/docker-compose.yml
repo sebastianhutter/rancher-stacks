@@ -5,7 +5,7 @@ volumes:
     driver_opts:
       share: nas.barfoot.local:/volume1/docker/pizza-media
 services:
-  media:
+  pizza-media:
     image: nginx:alpine
     stdin_open: true
     volumes:
@@ -15,8 +15,8 @@ services:
       io.rancher.container.pull_image: always
       cloud.hutter.watcher.ip.enable: false
       io.rancher.scheduler.affinity:host_label: "fast=true"
-  api:
-    image: nginx:alpine 
+  pizza-api:
+    image: sebastianhutter/pizza-api
     stdin_open: true
     tty: true
     labels:
